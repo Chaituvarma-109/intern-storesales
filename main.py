@@ -77,7 +77,7 @@ with st.form("my_form"):
         logging.info("Mid Prediction")
         results = predict_pipeline.predict(sales_df)
 
-        st.write(f"Prediction result is: {results[0]}")
+        st.metric("Prediction result:", value=results)
 
         logging.info("after Prediction")
         logging.info(f"results: {results}")
