@@ -1,7 +1,7 @@
-from storesales.components.data_ingestion import DataIngestion
-from storesales.components.data_transformation import DataTransformation
-from storesales.components.model_trainer import ModelTrainer
-from storesales.logger import logging
+from sales.components.data_ingestion import DataIngestion
+from sales.components.data_transformation import DataTransformation
+from sales.components.model_trainer import ModelTrainer
+from sales.logger import logging
 
 
 def train_pipeline():
@@ -16,6 +16,7 @@ def train_pipeline():
     model_trainer = ModelTrainer()
     score = model_trainer.initiate_model_trainer(train_arr, test_arr)
 
+    logging.info(f"model score: {score}")
     logging.info(">>>>>>>>>> train pipeline completed <<<<<<<<<<")
 
     return score

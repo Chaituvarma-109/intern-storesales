@@ -5,8 +5,8 @@ import sys
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
 
-from storesales.exception import CustomException
-from storesales.logger import logging
+from sales.exception import CustomException
+from sales.logger import logging
 
 CATEGORICAL_COLS = ['Item_Identifier', 'Item_Fat_Content', 'Item_Type', 'Outlet_Identifier', 'Outlet_Size',
                     'Outlet_Location_Type', 'Outlet_Type']

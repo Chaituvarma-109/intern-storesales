@@ -2,9 +2,9 @@ import os
 import sys
 import pandas as pd
 
-from storesales.exception import CustomException
-from storesales.utils import load_object
-from storesales.logger import logging
+from sales.exception import CustomException
+from sales.utils import load_object
+from sales.logger import logging
 
 
 class PredictPipeline:
