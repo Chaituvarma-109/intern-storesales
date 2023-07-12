@@ -1,34 +1,25 @@
 import os
 import sys
-from dataclasses import dataclass
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from sales.exception import CustomException
+from sales.config.configuration import DataIngestionConfig
 from sales.logger import logging
 
 
-@dataclass
-class DataIngestionConfig:
-    train_data_path: str = os.path.join('artifacts', "train.csv")
-    test_data_path: str = os.path.join('artifacts', "test.csv")
-    raw_data_path: str = os.path.join('artifacts', "data.csv")
-
-
 class DataIngestion:
-    def __init__(self):
-        self.ingestion_config = DataIngestionConfig()
+    def __init__(self, config: DataIngestionConfig):
+        self.ingestion_config = config
 
     def start_data_ingestion_config(self):
         logging.info("Entered the data ingestion method or component")
         try:
-            train_df = pd.read_csv("data/Train.csv")
+            train_df = pd.read_csv(self.ingestion_config.data_path)
             logging.info('Read the dataset as dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
-
-            train_df.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
 
             logging.info("Train test split initiated")
             train_set, test_set = train_test_split(train_df, test_size=0.2, random_state=42)

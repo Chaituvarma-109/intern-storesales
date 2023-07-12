@@ -1,6 +1,4 @@
-import os
 import sys
-from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
@@ -10,14 +8,10 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
+from sales.config.configuration import DataTransformationConfig
 from sales.exception import CustomException
 from sales.logger import logging
 from sales.utils import NUMERICAL_COLS, TARGET_COL, save_object, CATEGORICAL_COLS
-
-
-@dataclass
-class DataTransformationConfig:
-    preprocessor_obj_file_path = os.path.join('artifacts', "preprocessor.pkl")
 
 
 class FeatureGenerator(BaseEstimator, TransformerMixin):
@@ -52,8 +46,8 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
 
 
 class DataTransformation:
-    def __init__(self):
-        self.transformation_config = DataTransformationConfig()
+    def __init__(self, config: DataTransformationConfig):
+        self.transformation_config = config
 
     @staticmethod
     def get_data_transformer_object():
@@ -105,7 +99,6 @@ class DataTransformation:
             preprocessing_obj = self.get_data_transformer_object()
 
             target_col = TARGET_COL
-            num_cols = NUMERICAL_COLS
 
             input_feature_train_df = train_df.drop(columns=[target_col], axis=1)
             target_feature_train_df = train_df[target_col]
@@ -123,9 +116,9 @@ class DataTransformation:
 
             logging.info(f"Saved preprocessing object.")
 
-            save_object(file_path=self.transformation_config.preprocessor_obj_file_path, obj=preprocessing_obj)
+            save_object(file_path=self.transformation_config.preprocessed_obj_file_path, obj=preprocessing_obj)
 
-            return train_arr, test_arr, self.transformation_config.preprocessor_obj_file_path,
+            return train_arr, test_arr, self.transformation_config.preprocessed_obj_file_path,
 
         except Exception as e:
             raise CustomException(e, sys)

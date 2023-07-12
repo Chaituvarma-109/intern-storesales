@@ -1,7 +1,12 @@
 import os
 import pickle
 import sys
+import yaml
+from pathlib import Path
 
+from ensure import ensure_annotations
+from box.exceptions import BoxValueError
+from box import ConfigBox
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
 
@@ -14,6 +19,47 @@ CATEGORICAL_COLS = ['Item_Identifier', 'Item_Fat_Content', 'Item_Type', 'Outlet_
 NUMERICAL_COLS = ['Item_Weight', 'Item_Visibility', 'Item_MRP', 'Outlet_Establishment_Year']
 
 TARGET_COL = 'Item_Outlet_Sales'
+
+
+@ensure_annotations
+def read_yaml(path_to_yaml: Path) -> ConfigBox:
+    """reads yaml file and returns
+
+    Args:
+        path_to_yaml (str): path like input
+
+    Raises:
+        ValueError: if yaml file is empty
+        e: empty file
+
+    Returns:
+        ConfigBox: ConfigBox type
+    """
+    try:
+        with open(path_to_yaml) as yaml_file:
+            content = yaml.safe_load(yaml_file)
+            logging.info(f"yaml file: {path_to_yaml} loaded successfully")
+            return ConfigBox(content)
+    except BoxValueError:
+        raise ValueError("yaml file is empty")
+    except Exception as e:
+        raise e
+
+
+@ensure_annotations
+def create_directories(path_to_directories: list, verbose=True):
+    """create list of directories
+
+    Args:
+        path_to_directories (list): list of path of directories
+        ignore_log (bool, optional): ignore if multiple dirs is to be created. Defaults to False.
+        :param path_to_directories:
+        :param verbose:
+    """
+    for path in path_to_directories:
+        os.makedirs(path, exist_ok=True)
+        if verbose:
+            logging.info(f"created directory at: {path}")
 
 
 def save_object(file_path, obj):

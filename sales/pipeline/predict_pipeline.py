@@ -1,10 +1,18 @@
-import os
 import sys
 import pandas as pd
 
+from sales.config.configuration import ConfigManager
 from sales.exception import CustomException
 from sales.utils import load_object
 from sales.logger import logging
+
+config = ConfigManager()
+
+data_trans_config = config.get_data_transformation()
+model_trainer_config = config.get_model_trainer()
+
+preprocessor_path = data_trans_config.preprocessed_obj_file_path
+model_path = model_trainer_config.model_file_path
 
 
 class PredictPipeline:
@@ -14,8 +22,6 @@ class PredictPipeline:
     @staticmethod
     def predict(features):
         try:
-            model_path = os.path.join("artifacts", "model.pkl")
-            preprocessor_path = os.path.join('artifacts', 'preprocessor.pkl')
             logging.info("Before Loading")
             model = load_object(file_path=model_path)
             preprocessor = load_object(file_path=preprocessor_path)
