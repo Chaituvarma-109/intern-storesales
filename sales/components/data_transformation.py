@@ -10,14 +10,14 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
-from storesales.exception import CustomException
-from storesales.logger import logging
-from storesales.utils import NUMERICAL_COLS, TARGET_COL, save_object, CATEGORICAL_COLS
+from sales.exception import CustomException
+from sales.logger import logging
+from sales.utils import NUMERICAL_COLS, TARGET_COL, save_object, CATEGORICAL_COLS
 
 
 @dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path = os.path.join('../../artifacts', "preprocessor.pkl")
+    preprocessor_obj_file_path = os.path.join('artifacts', "preprocessor.pkl")
 
 
 class FeatureGenerator(BaseEstimator, TransformerMixin):

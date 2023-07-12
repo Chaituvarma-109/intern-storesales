@@ -1,7 +1,7 @@
 import streamlit as st
 
-from storesales.logger import logging
-from storesales.pipeline.predict_pipeline import CustomData, PredictPipeline
+from sales.logger import logging
+from sales.pipeline.predict_pipeline import CustomData, PredictPipeline
 
 fat_content = ['Low Fat', 'Regular']
 item_type = ['Food', 'Drinks', 'Non-Consumable']

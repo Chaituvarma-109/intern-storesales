@@ -8,14 +8,14 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from sklearn.tree import DecisionTreeRegressor
 
-from storesales.exception import CustomException
-from storesales.logger import logging
-from storesales.utils import evaluate_models, save_object
+from sales.exception import CustomException
+from sales.logger import logging
+from sales.utils import evaluate_models, save_object
 
 
 @dataclass
 class ModelTrainerConfig:
-    train_model_file_path: Path = os.path.join("../../artifacts", "model.pkl")
+    train_model_file_path: Path = os.path.join("artifacts", "model.pkl")
 
 
 class ModelTrainer:

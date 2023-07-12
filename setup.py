@@ -19,7 +19,7 @@ def get_requirements(file_path: str) -> list[str]:
 
 
 setup(
-    name='storesales',
+    name='sales',
     version='0.0.1',
     author='chaitanya',
     author_email='',

@@ -5,15 +5,15 @@ from dataclasses import dataclass
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from storesales.exception import CustomException
-from storesales.logger import logging
+from sales.exception import CustomException
+from sales.logger import logging
 
 
 @dataclass
 class DataIngestionConfig:
-    train_data_path: str = os.path.join('../../artifacts', "train.csv")
-    test_data_path: str = os.path.join('../../artifacts', "test.csv")
-    raw_data_path: str = os.path.join('../../artifacts', "data.csv")
+    train_data_path: str = os.path.join('artifacts', "train.csv")
+    test_data_path: str = os.path.join('artifacts', "test.csv")
+    raw_data_path: str = os.path.join('artifacts', "data.csv")
 
 
 class DataIngestion:
@@ -23,7 +23,7 @@ class DataIngestion:
     def start_data_ingestion_config(self):
         logging.info("Entered the data ingestion method or component")
         try:
-            train_df = pd.read_csv("../../data/Train.csv")
+            train_df = pd.read_csv("data/Train.csv")
             logging.info('Read the dataset as dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
