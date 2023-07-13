@@ -8,15 +8,18 @@ from sklearn.tree import DecisionTreeRegressor
 from sales.config.configuration import ModelTrainerConfig
 from sales.exception import CustomException
 from sales.logger import logging
-from sales.utils import evaluate_models, save_object
+from sales.utils import evaluate_models, save_object, load_numpy_array_data
 
 
 class ModelTrainer:
     def __init__(self, config: ModelTrainerConfig):
         self.model_trainer_config = config
 
-    def initiate_model_trainer(self, train_arr, test_arr):
+    def initiate_model_trainer(self):
         try:
+            logging.info("loading train and test arrays")
+            train_arr = load_numpy_array_data(self.model_trainer_config.train_arr_path)
+            test_arr = load_numpy_array_data(self.model_trainer_config.test_arr_path)
             logging.info("Split training and test input data")
             X_train, y_train, X_test, y_test = (
                 train_arr[:, :-1],

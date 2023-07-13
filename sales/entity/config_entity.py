@@ -14,9 +14,15 @@ class DataIngestionConfig:
 class DataTransformationConfig:
     root_dir: Path
     preprocessed_obj_file_path: Path
+    train_arr_path: Path
+    test_arr_path: Path
+    train_data_path: Path
+    test_data_path: Path
 
 
 @dataclass(frozen=True)
 class ModelTrainerConfig:
     root_dir: Path
     model_file_path: Path
+    train_arr_path: Path
+    test_arr_path: Path

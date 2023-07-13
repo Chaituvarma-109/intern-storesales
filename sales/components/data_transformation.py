@@ -11,7 +11,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sales.config.configuration import DataTransformationConfig
 from sales.exception import CustomException
 from sales.logger import logging
-from sales.utils import NUMERICAL_COLS, TARGET_COL, save_object, CATEGORICAL_COLS
+from sales.utils import NUMERICAL_COLS, TARGET_COL, save_object, CATEGORICAL_COLS, save_numpy_array_data
 
 
 class FeatureGenerator(BaseEstimator, TransformerMixin):
@@ -86,11 +86,11 @@ class DataTransformation:
         except Exception as e:
             raise CustomException(e, sys)
 
-    def initiate_data_transformation(self, train_path, test_path):
+    def initiate_data_transformation(self):
 
         try:
-            train_df = pd.read_csv(train_path)
-            test_df = pd.read_csv(test_path)
+            train_df = pd.read_csv(self.transformation_config.train_data_path)
+            test_df = pd.read_csv(self.transformation_config.test_data_path)
 
             logging.info("Read train and test data completed")
 
@@ -114,7 +114,11 @@ class DataTransformation:
             train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
-            logging.info(f"Saved preprocessing object.")
+            logging.info("saving train and test arrays")
+            save_numpy_array_data(self.transformation_config.train_arr_path, train_arr)
+            save_numpy_array_data(self.transformation_config.test_arr_path, test_arr)
+
+            logging.info("Saving preprocessing object.")
 
             save_object(file_path=self.transformation_config.preprocessed_obj_file_path, obj=preprocessing_obj)
 

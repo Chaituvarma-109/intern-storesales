@@ -6,6 +6,5 @@ python-box[all]
 pyyaml~=6.0
 setuptools==68.0.0
 ensure
-python-box
 
 -e .
