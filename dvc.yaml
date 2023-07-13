@@ -1,0 +1,29 @@
+stages:
+  data_ingestion:
+    cmd: python sales/pipeline/data_ingestion_pipeline.py
+    deps:
+      - sales/pipeline/data_ingestion_pipeline.py
+      - config/config.yaml
+    outs:
+      - artifacts/data_ingestion/test.csv
+      - artifacts/data_ingestion/train.csv
+  data_transformation:
+    cmd: python sales/pipeline/data_transformation_pipeline.py
+    deps:
+      - sales/pipeline/data_transformation_pipeline.py
+      - config/config.yaml
+      - artifacts/data_ingestion/train.csv
+      - artifacts/data_ingestion/test.csv
+    outs:
+      - artifacts/data_transformation/preprocessor.pkl
+      - artifacts/data_transformation/train.npz
+      - artifacts/data_transformation/test.npz
+  model_trainer:
+    cmd: python sales/pipeline/model_trainer_pipeline.py
+    deps:
+      - sales/pipeline/model_trainer_pipeline.py
+      - config/config.yaml
+      - artifacts/data_transformation/train.npz
+      - artifacts/data_transformation/test.npz
+    outs:
+      - artifacts/model_trainer/model.pkl

@@ -1,0 +1,78 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python sales/pipeline/data_ingestion_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 41804d38580b076ee13eaa30ba54d407
+      size: 821
+    - path: sales/pipeline/data_ingestion_pipeline.py
+      hash: md5
+      md5: d2d667460788e1597aede48c1284e356
+      size: 1201
+    outs:
+    - path: artifacts/data_ingestion/test.csv
+      hash: md5
+      md5: 514eb8c15467a3fbd9fd94954b74ec47
+      size: 174308
+    - path: artifacts/data_ingestion/train.csv
+      hash: md5
+      md5: 30dcca117d4d16dfbda469f9ad9232db
+      size: 697475
+  data_transformation:
+    cmd: python sales/pipeline/data_transformation_pipeline.py
+    deps:
+    - path: artifacts/data_ingestion/test.csv
+      hash: md5
+      md5: 514eb8c15467a3fbd9fd94954b74ec47
+      size: 174308
+    - path: artifacts/data_ingestion/train.csv
+      hash: md5
+      md5: 30dcca117d4d16dfbda469f9ad9232db
+      size: 697475
+    - path: config/config.yaml
+      hash: md5
+      md5: 41804d38580b076ee13eaa30ba54d407
+      size: 821
+    - path: sales/pipeline/data_transformation_pipeline.py
+      hash: md5
+      md5: b4225529c9c24d7f8a732605cb9747ab
+      size: 1132
+    outs:
+    - path: artifacts/data_transformation/preprocessor.pkl
+      hash: md5
+      md5: 809713aa8393fb0370bbd0c914e2b005
+      size: 53771
+    - path: artifacts/data_transformation/test.npz
+      hash: md5
+      md5: 8dff695daa8af32c2307321b15c7c64e
+      size: 21469488
+    - path: artifacts/data_transformation/train.npz
+      hash: md5
+      md5: 36c6bde0a93694c294a5bff8728fdb4f
+      size: 85852384
+  model_trainer:
+    cmd: python sales/pipeline/model_trainer_pipeline.py
+    deps:
+    - path: artifacts/data_transformation/test.npz
+      hash: md5
+      md5: 8dff695daa8af32c2307321b15c7c64e
+      size: 21469488
+    - path: artifacts/data_transformation/train.npz
+      hash: md5
+      md5: 36c6bde0a93694c294a5bff8728fdb4f
+      size: 85852384
+    - path: config/config.yaml
+      hash: md5
+      md5: 41804d38580b076ee13eaa30ba54d407
+      size: 821
+    - path: sales/pipeline/model_trainer_pipeline.py
+      hash: md5
+      md5: 81b252bc10c756b7fbbf6d87ce7d8481
+      size: 1187
+    outs:
+    - path: artifacts/model_trainer/model.pkl
+      hash: md5
+      md5: a4452b6d9742b62a7c92922d3538a9f0
+      size: 78022819
