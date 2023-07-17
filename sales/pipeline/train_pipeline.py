@@ -23,14 +23,14 @@ def train_pipeline():
     logging.info("started data transformation pipeline")
     data_transformation_config = config.get_data_transformation()
     data_transformation = DataTransformation(data_transformation_config)
-    train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
+    train_arr, test_arr, _ = data_transformation.initiate_data_transformation()
     logging.info("completed data transformation pipeline")
 
     # model trainer pipeline
     logging.info("started model trainer pipeline")
     model_trainer_config = config.get_model_trainer()
     model_trainer = ModelTrainer(model_trainer_config)
-    score = model_trainer.initiate_model_trainer(train_arr, test_arr)
+    score = model_trainer.initiate_model_trainer()
     logging.info("completed model trainer pipeline")
 
     logging.info(f"model score: {score}")

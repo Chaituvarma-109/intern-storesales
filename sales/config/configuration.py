@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from sales.constants import CONFIG_FILE_PATH
@@ -33,7 +32,11 @@ class ConfigManager:
 
         data_transformation_config = DataTransformationConfig(
             root_dir=Path(config.root_dir),
-            preprocessed_obj_file_path=Path(config.preprocessed_obj_file_path)
+            preprocessed_obj_file_path=Path(config.preprocessed_obj_file_path),
+            train_arr_path=Path(config.train_arr_path),
+            test_arr_path=Path(config.test_arr_path),
+            train_data_path=Path(config.train_data_path),
+            test_data_path=Path(config.test_data_path)
         )
 
         return data_transformation_config
@@ -45,7 +48,9 @@ class ConfigManager:
 
         model_trainer_config = ModelTrainerConfig(
             root_dir=config.root_dir,
-            model_file_path=Path(config.model_file_path)
+            model_file_path=Path(config.model_file_path),
+            train_arr_path=Path(config.train_arr_path),
+            test_arr_path=Path(config.test_arr_path),
         )
 
         return model_trainer_config
