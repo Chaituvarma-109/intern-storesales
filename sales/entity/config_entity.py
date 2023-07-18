@@ -5,7 +5,8 @@ from pathlib import Path
 @dataclass(frozen=True)
 class DataIngestionConfig:
     root_dir: Path
-    data_path: Path
+    data_train_path: Path
+    data_test_path: Path
     train_data_path: Path
     test_data_path: Path
 

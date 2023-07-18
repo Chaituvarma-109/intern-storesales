@@ -5,5 +5,7 @@ python-box[all]
 ensure
 streamlit
 pyyaml
+python-dotenv
+SQLAlchemy
 
 -e .

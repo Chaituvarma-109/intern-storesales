@@ -18,7 +18,8 @@ class ConfigManager:
 
         data_ingestion_config = DataIngestionConfig(
             root_dir=config.root_dir,
-            data_path=Path(config.data_path),
+            data_train_path=Path(config.data_train_path),
+            data_test_path=Path(config.data_test_path),
             train_data_path=Path(config.train_data_path),
             test_data_path=Path(config.test_data_path),
         )
