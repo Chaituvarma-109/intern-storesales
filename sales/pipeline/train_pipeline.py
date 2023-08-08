@@ -1,5 +1,6 @@
 from sales.config.configuration import ConfigManager
 from sales.components.data_ingestion import DataIngestion
+from sales.components.data_validation import DataValidation, Schema
 from sales.components.data_transformation import DataTransformation
 from sales.components.model_trainer import ModelTrainer
 from sales.logger import logging
@@ -19,6 +20,16 @@ def train_pipeline():
     train_data, test_data = data_ingestion.start_data_ingestion_config()
     logging.info("completed data ingestion pipeline")
 
+    # data validation pipeline
+    logging.info("started data validation pipeline")
+    data_validation_config = config.get_data_validation()
+    data_validation = DataValidation(data_validation_config)
+    train_data_, test_data_ = data_validation.get_train_test_file_path()
+
+    Schema.validate(train_data_)
+    Schema.validate(test_data_)
+    logging.info("completed data validation pipeline")
+
     # data transformation pipeline
     logging.info("started data transformation pipeline")
     data_transformation_config = config.get_data_transformation()
@@ -30,15 +41,11 @@ def train_pipeline():
     logging.info("started model trainer pipeline")
     model_trainer_config = config.get_model_trainer()
     model_trainer = ModelTrainer(model_trainer_config)
-    score = model_trainer.initiate_model_trainer()
+    model_trainer.initiate_model_trainer()
     logging.info("completed model trainer pipeline")
 
-    logging.info(f"model score: {score}")
     logging.info(">>>>>>>>>> train pipeline completed <<<<<<<<<<")
-
-    return score
 
 
 if __name__ == "__main__":
-    res = train_pipeline()
-    print(res)
+    train_pipeline()
