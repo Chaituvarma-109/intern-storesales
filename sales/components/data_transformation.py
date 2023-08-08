@@ -11,7 +11,8 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sales.config.configuration import DataTransformationConfig
 from sales.exception import CustomException
 from sales.logger import logging
-from sales.utils import NUMERICAL_COLS, TARGET_COL, save_object, CATEGORICAL_COLS, save_numpy_array_data
+from sales.utils import save_object, save_numpy_array_data
+from sales.constants import NUMERICAL_COLS, TARGET_COL, CATEGORICAL_COLS
 
 
 class FeatureGenerator(BaseEstimator, TransformerMixin):
