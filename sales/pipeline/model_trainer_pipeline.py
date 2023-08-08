@@ -18,10 +18,8 @@ class ModelTrainingPipeline:
         logging.info("started model trainer pipeline")
         model_trainer_config = config.get_model_trainer()
         model_trainer = ModelTrainer(model_trainer_config)
-        score = model_trainer.initiate_model_trainer()
+        model_trainer.initiate_model_trainer()
         logging.info("completed model trainer pipeline")
-
-        logging.info(f"model score: {score}")
 
 
 if __name__ == "__main__":
