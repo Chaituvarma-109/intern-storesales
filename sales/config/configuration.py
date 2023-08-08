@@ -2,7 +2,7 @@ from pathlib import Path
 
 from sales.constants import CONFIG_FILE_PATH
 from sales.utils import read_yaml, create_directories
-from sales.entity.config_entity import DataIngestionConfig, DataTransformationConfig, ModelTrainerConfig
+from sales.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig
 
 
 class ConfigManager:
@@ -25,6 +25,16 @@ class ConfigManager:
         )
 
         return data_ingestion_config
+
+    def get_data_validation(self) -> DataValidationConfig:
+        config = self.config.data_validation
+
+        data_validation_config = DataValidationConfig(
+            train_data_path=Path(config.train_data_path),
+            test_data_path=Path(config.test_data_path)
+        )
+
+        return data_validation_config
 
     def get_data_transformation(self) -> DataTransformationConfig:
         config = self.config.data_transformation
