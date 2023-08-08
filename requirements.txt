@@ -7,5 +7,7 @@ streamlit
 pyyaml
 python-dotenv
 SQLAlchemy
+pandera
+mlflow
 
 -e .
