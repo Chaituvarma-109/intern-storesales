@@ -1,3 +1,4 @@
+# TODO: test dvc pipeline
 stages:
   data_ingestion:
     cmd: python sales/pipeline/data_ingestion_pipeline.py
@@ -7,6 +8,13 @@ stages:
     outs:
       - artifacts/data_ingestion/test.csv
       - artifacts/data_ingestion/train.csv
+  data_validation:
+    cmd: python sales/pipeline/data_validation_pipeline.py
+    deps:
+      - sales/pipeline/data_ingestion_pipeline.py
+      - config/config.yaml
+      - artifacts/data_ingestion/train.csv
+      - artifacts/data_ingestion/test.csv
   data_transformation:
     cmd: python sales/pipeline/data_transformation_pipeline.py
     deps:
